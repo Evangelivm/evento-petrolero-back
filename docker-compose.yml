@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
-    volumes:
-      - ../persisted-data/uploads:/app/uploads # Carpeta donde se almacenan las imágenes
+    # volumes:
+    #   - ../persisted-data/uploads:/app/uploads # Carpeta donde se almacenan las imágenes
     devices:
       - '/dev/ttyS3:/dev/ttyS3'
     environment:

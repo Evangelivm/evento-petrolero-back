@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql:8.0-debian
+    container_name: evento_petrolero_back
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: eventopassword
+      MYSQL_DATABASE: evento_petrolero
+      MYSQL_USER: nestuser
+      MYSQL_PASSWORD: eventopassword
+    volumes:
+      - mysql_data:/var/lib/mysql # Volumen para persistir datos
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
+
+volumes:
+  mysql_data: # Define el volumen (Docker lo gestiona automáticamente)

@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ../persisted-data/uploads:/app/uploads # Carpeta donde se almacenan las imágenes
+    devices:
+      - '/dev/ttyS3:/dev/ttyS3'
+    environment:
+      DATABASE_URL: mysql://root:pedidospassword@evento_petrolero_back:3306/evento_petrolero
+    networks:
+      - shared_network
+    privileged: true
+
+networks:
+  shared_network:
+    external: true

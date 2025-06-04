@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model participantes {
+  id                  Int                             @id @default(autoincrement())
+  nombre              String                          @db.VarChar(255)
+  email               String                          @db.VarChar(255)
+  telefono            String                          @db.VarChar(255)
+  ruc                 String?                         @db.VarChar(45)
+  tipo_participante   participantes_tipo_participante
+  metodo_pago         participantes_metodo_pago
+  comprobante         String?                         @db.VarChar(255)
+  monto               Float
+  estado_pago         participantes_estado_pago       @default(PENDIENTE)
+  codigo_qr           String?                         @db.VarChar(255)
+  codigo              String?                         @unique(map: "participants_ticketNumber_key") @db.VarChar(255)
+  fecha_registro      DateTime                        @default(now())
+  fecha_pago          DateTime?
+  fecha_validacion    DateTime?
+  fecha_creacion      DateTime                        @default(now())
+  fecha_actualizacion DateTime?
+}
+
+enum participantes_estado_pago {
+  PENDIENTE
+  CONFIRMADO
+  RECHAZADO
+}
+
+enum participantes_tipo_participante {
+  EMPRESAS
+  INSTITUCIONES
+  PROFESIONALES_ESTUDIANTES
+  PUBLICO_EN_GENERAL
+}
+
+enum participantes_metodo_pago {
+  YAPE
+  PLIN
+  TRANSFERENCIA
+  EFECTIVO
+}

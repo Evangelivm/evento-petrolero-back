@@ -29,6 +29,7 @@ CREATE TABLE `participantes` (
   `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ruc` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tipo_participante` enum('EMPRESAS','INSTITUCIONES','PROFESIONALES_ESTUDIANTES','PUBLICO_EN_GENERAL') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dias` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `metodo_pago` enum('YAPE','PLIN','TRANSFERENCIA','EFECTIVO') COLLATE utf8mb4_unicode_ci NOT NULL,
   `comprobante` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monto` double NOT NULL,

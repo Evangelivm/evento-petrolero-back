@@ -37,6 +37,7 @@ export class ParticipantsService {
       telefono: createParticipantDto.telefono,
       ruc: createParticipantDto.ruc,
       tipo_participante: createParticipantDto.tipo_participante,
+      dias: createParticipantDto.dias ?? '',
       metodo_pago: createParticipantDto.metodo_pago,
       comprobante: createParticipantDto.comprobante,
       monto: createParticipantDto.monto,

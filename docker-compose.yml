@@ -10,7 +10,7 @@ services:
     devices:
       - '/dev/ttyS3:/dev/ttyS3'
     environment:
-      DATABASE_URL: mysql://root:pedidospassword@evento_petrolero_back:3306/evento_petrolero
+      DATABASE_URL: mysql://root:eventopassword@evento_petrolero_back:3306/evento_petrolero
     networks:
       - shared_network
     privileged: true

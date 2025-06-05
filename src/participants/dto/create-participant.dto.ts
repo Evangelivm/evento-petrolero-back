@@ -12,8 +12,9 @@ export const CreateParticipantSchema = z.object({
     'PROFESIONALES_ESTUDIANTES',
     'PUBLICO_EN_GENERAL',
   ]),
+  comprobante: z.string().nullable().optional(),
   metodo_pago: z.enum(['YAPE', 'PLIN', 'TRANSFERENCIA', 'EFECTIVO']),
-  comprobante: z.string().optional(),
+  dias: z.string().optional(),
   monto: z.number().positive('El monto debe ser positivo'),
   estado_pago: z.enum(['PENDIENTE', 'CONFIRMADO']).optional(),
   codigo: z.string().min(1, 'El código es requerido'), // <-- agregado

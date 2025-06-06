@@ -22,8 +22,8 @@ async function bootstrap() {
         callback(new Error('Acceso no permitido'), false);
       }
     },
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS,HEAD',
+    allowedHeaders: ['Content-Type', 'Authorization'],
     maxAge: 86400,
   });
 

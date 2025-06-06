@@ -7,9 +7,10 @@ async function bootstrap() {
 
   // Enable CORS for frontend communication
   const allowedOrigins = [
-    'https://reactivapetroltalara.online',
-    'https://www.reactivapetroltalara.online',
-    'http://localhost:3001',
+    // 'https://reactivapetroltalara.online',
+    // 'https://www.reactivapetroltalara.online',
+    // 'http://localhost:3001',
+    '*',
     ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
   ].filter(Boolean);
 

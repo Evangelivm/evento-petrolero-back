@@ -6,13 +6,25 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS for frontend communication
+  const allowedOrigins = [
+    'https://reactivapetroltalara.online',
+    'https://www.reactivapetroltalara.online',
+    'http://localhost:3001',
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+  ].filter(Boolean);
+
   app.enableCors({
-    //origin: '*',
-    origin:
-      process.env.FRONTEND_URL ||
-      'http://localhost:3001' ||
-      'https://reactivapetroltalara.online',
-    credentials: false,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.some((allowed) => origin === allowed)) {
+        callback(null, true);
+      } else {
+        console.warn(`Dominio bloqueado por CORS: ${origin}`); // Log para debugging
+        callback(new Error('Acceso no permitido'), false);
+      }
+    },
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    maxAge: 86400,
   });
 
   // Global validation pipe

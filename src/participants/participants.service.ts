@@ -11,6 +11,8 @@ import { UpdateParticipantDto } from './dto/update-participant.dto';
 import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
 import * as QRCode from 'qrcode';
 import { participantes_estado_pago } from '@prisma/client';
+import { RejectPaymentDto } from './dto/reject-payment.dto';
+import { UpdateCorreoEnviadoDto } from './dto/update-correo-enviado.dto';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -138,7 +140,7 @@ export class ParticipantsService {
   }
 
   async confirmPayment(confirmPaymentDto: ConfirmPaymentDto) {
-    const { participantId, paymentReference } = confirmPaymentDto;
+    const { participantId } = confirmPaymentDto;
 
     const participant = await this.findOne(participantId);
 
@@ -146,32 +148,65 @@ export class ParticipantsService {
       throw new BadRequestException('El pago ya ha sido confirmado');
     }
 
-    // Generate QR code
-    // const qrData = JSON.stringify({
-    //   participantId: participant.id,
-    //   codigo: participant.codigo,
-    //   email: participant.email,
-    //   eventDate: '2025-03-15',
-    // });
-
-    // const qrCode = await QRCode.toDataURL(qrData);
-
     // Update participant
     const updatedParticipant = await this.prisma.participantes.update({
       where: { id: parseInt(participantId, 10) },
       data: {
         estado_pago: participantes_estado_pago.CONFIRMADO,
-        comprobante: paymentReference,
         fecha_pago: new Date(),
         fecha_validacion: new Date(),
       },
     });
 
-    // Send confirmation email with QR code
-    // await this.emailService.sendPaymentConfirmation(updatedParticipant);
-
     return {
       message: 'Pago confirmado exitosamente',
+      participant: updatedParticipant,
+    };
+  }
+
+  async rejectPayment(rejectPaymentDto: RejectPaymentDto) {
+    const { participantId } = rejectPaymentDto;
+
+    const participant = await this.findOne(participantId);
+
+    if (participant.estado_pago === 'RECHAZADO') {
+      throw new BadRequestException('El pago ya ha sido rechazado');
+    }
+
+    const updatedParticipant = await this.prisma.participantes.update({
+      where: { id: parseInt(participantId, 10) },
+      data: {
+        estado_pago: participantes_estado_pago.RECHAZADO,
+        fecha_pago: new Date(),
+        fecha_validacion: new Date(),
+      },
+    });
+
+    return {
+      message: 'Pago rechazado exitosamente',
+      participant: updatedParticipant,
+    };
+  }
+
+  async updateCorreoEnviado(updateCorreoEnviadoDto: UpdateCorreoEnviadoDto) {
+    const { participantId } = updateCorreoEnviadoDto;
+
+    const participant = await this.findOne(participantId);
+
+    // if (participant.correo_enviado === 'SI') {
+    //   throw new BadRequestException('El correo ya ha sido enviado');
+    // }
+
+    const updatedParticipant = await this.prisma.participantes.update({
+      where: { id: parseInt(participantId, 10) },
+      data: {
+        correo_enviado: 'SI',
+        fecha_actualizacion: new Date(),
+      },
+    });
+
+    return {
+      message: 'Correo enviado actualizado exitosamente',
       participant: updatedParticipant,
     };
   }

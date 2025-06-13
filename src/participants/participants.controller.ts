@@ -9,6 +9,7 @@ import {
   Body,
   HttpStatus,
   HttpCode,
+  Put,
 } from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { ParticipantsService } from './participants.service';
@@ -18,6 +19,8 @@ import {
 } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
 import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
+import { RejectPaymentDto } from './dto/reject-payment.dto';
+import { UpdateCorreoEnviadoDto } from './dto/update-correo-enviado.dto';
 
 @Controller('participants')
 export class ParticipantsController {
@@ -66,16 +69,43 @@ export class ParticipantsController {
     return this.participantsService.update(id, updateParticipantDto);
   }
 
-  @Post('confirm-payment')
+  @Put('confirm-payment/:id')
   @HttpCode(HttpStatus.OK)
-  async confirmPayment(confirmPaymentDto: ConfirmPaymentDto) {
-    return this.participantsService.confirmPayment(confirmPaymentDto);
+  async confirmPayment(
+    @Param('id') id: string,
+    @Body() confirmPaymentDto: ConfirmPaymentDto,
+  ) {
+    return this.participantsService.confirmPayment({
+      participantId: id,
+    });
+  }
+
+  @Put('reject-payment/:id')
+  @HttpCode(HttpStatus.OK)
+  async rejectPayment(
+    @Param('id') id: string,
+    @Body() rejectPaymentDto: RejectPaymentDto,
+  ) {
+    return this.participantsService.rejectPayment({
+      participantId: id,
+    });
   }
 
   @Post(':id/generate-ticket')
   @HttpCode(HttpStatus.OK)
   async generateTicket(@Param('id') id: string) {
     return this.participantsService.generateTicket(id);
+  }
+
+  @Put('update-correo-enviado/:id')
+  @HttpCode(HttpStatus.OK)
+  async updateCorreoEnviado(
+    @Param('id') id: string,
+    @Body() updateCorreoEnviadoDto: UpdateCorreoEnviadoDto,
+  ) {
+    return this.participantsService.updateCorreoEnviado({
+      participantId: id,
+    });
   }
 
   @Delete(':id')

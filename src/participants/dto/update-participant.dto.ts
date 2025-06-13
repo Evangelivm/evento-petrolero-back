@@ -8,7 +8,7 @@ export const UpdateParticipantSchema = CreateParticipantSchema.partial().extend(
     fecha_pago: z.date().optional(),
     fecha_validacion: z.date().optional(),
     fecha_actualizacion: z.date().optional(),
-    codigo_qr: z.string().optional(),
+    correo_enviado: z.enum(['SI', 'NO']).optional(),
     codigo: z.string().optional(),
   },
 );

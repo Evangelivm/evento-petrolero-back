@@ -34,7 +34,7 @@ CREATE TABLE `participantes` (
   `comprobante` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monto` double NOT NULL,
   `estado_pago` enum('PENDIENTE','CONFIRMADO','RECHAZADO') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDIENTE',
-  `codigo_qr` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_enviado` enum('SI','NO') COLLATE utf8mb4_unicode_ci NOT NULL,
   `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_registro` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   `fecha_pago` datetime(3) DEFAULT NULL,

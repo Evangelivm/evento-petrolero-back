@@ -43,6 +43,7 @@ export class ParticipantsService {
       monto: createParticipantDto.monto,
       codigo: createParticipantDto.codigo,
       estado_pago: createParticipantDto.estado_pago ?? undefined, // <-- agregado
+      correo_enviado: 'NO',
     };
 
     const participant = await this.prisma.participantes.create({
@@ -146,14 +147,14 @@ export class ParticipantsService {
     }
 
     // Generate QR code
-    const qrData = JSON.stringify({
-      participantId: participant.id,
-      codigo: participant.codigo,
-      email: participant.email,
-      eventDate: '2025-03-15',
-    });
+    // const qrData = JSON.stringify({
+    //   participantId: participant.id,
+    //   codigo: participant.codigo,
+    //   email: participant.email,
+    //   eventDate: '2025-03-15',
+    // });
 
-    const qrCode = await QRCode.toDataURL(qrData);
+    // const qrCode = await QRCode.toDataURL(qrData);
 
     // Update participant
     const updatedParticipant = await this.prisma.participantes.update({
@@ -162,7 +163,6 @@ export class ParticipantsService {
         estado_pago: participantes_estado_pago.CONFIRMADO,
         comprobante: paymentReference,
         fecha_pago: new Date(),
-        codigo_qr: qrCode,
         fecha_validacion: new Date(),
       },
     });
@@ -185,18 +185,17 @@ export class ParticipantsService {
       );
     }
 
-    if (!participant.codigo_qr) {
-      throw new BadRequestException(
-        'No se puede generar el ticket sin código QR',
-      );
-    }
+    // if (!participant.codigo_qr) {
+    //   throw new BadRequestException(
+    //     'No se puede generar el ticket sin código QR',
+    //   );
+    // }
 
     return {
       message: 'Ticket generado exitosamente',
       ticket: {
         participantId: participant.id,
         codigo: participant.codigo,
-        qrCode: participant.codigo_qr,
         participantName: participant.nombre,
         email: participant.email,
       },

@@ -19,7 +19,7 @@ model participantes {
   comprobante         String?                         @db.VarChar(255)
   monto               Float
   estado_pago         participantes_estado_pago       @default(PENDIENTE)
-  codigo_qr           String?                         @db.VarChar(255)
+  correo_enviado      participantes_correo_enviado?   @default(NO)
   codigo              String?                         @unique(map: "participants_ticketNumber_key") @db.VarChar(255)
   fecha_registro      DateTime                        @default(now())
   fecha_pago          DateTime?
@@ -46,4 +46,9 @@ enum participantes_metodo_pago {
   PLIN
   TRANSFERENCIA
   EFECTIVO
+}
+
+enum participantes_correo_enviado {
+  SI
+  NO
 }

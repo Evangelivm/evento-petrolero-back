@@ -15,7 +15,8 @@ export const CreateParticipantSchema = z.object({
   tipo_participante: z.enum([
     'EMPRESAS',
     'INSTITUCIONES',
-    'PROFESIONALES_ESTUDIANTES',
+    'PROFESIONALES',
+    'ESTUDIANTES',
     'PUBLICO_EN_GENERAL',
   ]),
   comprobante: z.string().nullable().optional(),

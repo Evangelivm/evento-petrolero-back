@@ -19,7 +19,7 @@ model participantes {
   comprobante         String?                         @db.VarChar(255)
   monto               Float
   estado_pago         participantes_estado_pago       @default(PENDIENTE)
-  correo_enviado      participantes_correo_enviado?   @default(NO)
+  correo_enviado      participantes_correo_enviado    @default(NO)
   codigo              String?                         @unique(map: "participants_ticketNumber_key") @db.VarChar(255)
   fecha_registro      DateTime                        @default(now())
   fecha_pago          DateTime?
@@ -34,13 +34,6 @@ enum participantes_estado_pago {
   RECHAZADO
 }
 
-enum participantes_tipo_participante {
-  EMPRESAS
-  INSTITUCIONES
-  PROFESIONALES_ESTUDIANTES
-  PUBLICO_EN_GENERAL
-}
-
 enum participantes_metodo_pago {
   YAPE
   PLIN
@@ -51,4 +44,12 @@ enum participantes_metodo_pago {
 enum participantes_correo_enviado {
   SI
   NO
+}
+
+enum participantes_tipo_participante {
+  EMPRESAS
+  INSTITUCIONES
+  PROFESIONALES
+  ESTUDIANTES
+  PUBLICO_EN_GENERAL
 }

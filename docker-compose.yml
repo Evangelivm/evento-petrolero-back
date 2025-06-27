@@ -11,7 +11,7 @@ services:
       - '/dev/ttyS3:/dev/ttyS3'
     environment:
       DATABASE_URL: mysql://root:eventopassword@evento_petrolero_back:3306/evento_petrolero
-      FRONTEND_URL: https://reactivapetroltalara.online # 🔥 Clave para CORS
+      FRONTEND_URL: https://reactivapetroltalara.online,https://admin.reactivapetroltalara.online
       NODE_ENV: production # Opcional pero recomendado
     networks:
       - shared_network

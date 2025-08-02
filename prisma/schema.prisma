@@ -17,7 +17,7 @@ model participantes {
   dias                String                          @db.VarChar(45)
   metodo_pago         participantes_metodo_pago
   comprobante         String?                         @db.VarChar(255)
-  monto               Float
+  monto               Float?
   estado_pago         participantes_estado_pago       @default(PENDIENTE)
   correo_enviado      participantes_correo_enviado    @default(NO)
   codigo              String?                         @unique(map: "participants_ticketNumber_key") @db.VarChar(255)
@@ -52,4 +52,8 @@ enum participantes_tipo_participante {
   PROFESIONALES
   ESTUDIANTES
   PUBLICO_EN_GENERAL
+  AUSPICIADOR
+  AUTORIDAD
+  MEDIA_PARTNER
+  ALUMNO_UNIVERSITARIO
 }

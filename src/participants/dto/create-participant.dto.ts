@@ -7,10 +7,13 @@ export const CreateParticipantSchema = z.object({
   telefono: z
     .number()
     .int('El teléfono debe ser un número entero')
-    .positive('El teléfono debe ser positivo'),
-  // .refine((val) => val.toString().length >= 9, {
-  //   message: 'El teléfono debe tener al menos 9 dígitos',
-  // }),
+    .positive('El teléfono debe ser positivo')
+    .refine(
+      (val) => val.toString().length >= 9 && val.toString().length <= 15,
+      {
+        message: 'El teléfono debe tener entre 9 y 15 dígitos',
+      },
+    ),
   ruc: z.string().optional(),
   tipo_participante: z.enum([
     'EMPRESAS',

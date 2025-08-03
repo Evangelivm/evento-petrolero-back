@@ -11,7 +11,7 @@ model participantes {
   id                  Int                             @id @default(autoincrement())
   nombre              String                          @db.VarChar(255)
   email               String                          @db.VarChar(255)
-  telefono            Int
+  telefono            BigInt
   ruc                 String?                         @db.VarChar(45)
   tipo_participante   participantes_tipo_participante
   dias                String                          @db.VarChar(45)

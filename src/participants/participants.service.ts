@@ -66,9 +66,8 @@ export class ParticipantsService {
     };
   }
 
-  async findAll(options: { page: number; limit: number; search?: string }) {
-    const { page, limit, search } = options;
-    const skip = (page - 1) * limit;
+  async findAll(options: { search?: string }) {
+    const { search } = options;
 
     const where = search
       ? {
@@ -80,24 +79,13 @@ export class ParticipantsService {
         }
       : {};
 
-    const [participants, total] = await Promise.all([
-      this.prisma.participantes.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: { fecha_creacion: 'desc' },
-      }),
-      this.prisma.participantes.count({ where }),
-    ]);
+    const participants = await this.prisma.participantes.findMany({
+      where,
+      orderBy: { fecha_creacion: 'desc' },
+    });
 
     return {
       participants,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
     };
   }
 

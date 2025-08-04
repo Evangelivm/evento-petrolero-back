@@ -36,17 +36,8 @@ export class ParticipantsController {
   }
 
   @Get()
-  async findAll(
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-    @Query('search') search?: string,
-  ) {
-    const pageNum = page ? Number.parseInt(page, 10) : 1;
-    const limitNum = limit ? Number.parseInt(limit, 10) : 10;
-
+  async findAll(@Query('search') search?: string) {
     return this.participantsService.findAll({
-      page: pageNum,
-      limit: limitNum,
       search,
     });
   }
